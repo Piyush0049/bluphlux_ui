@@ -42,14 +42,27 @@ const Dashboard: React.FC = () => {
     (!filter.interviewer || i.interviewer.toLowerCase().includes(filter.interviewer.toLowerCase()))
   );
 
-  const events = filteredInterviews.map((i: any) => ({
-    ...i,
-    id: i.id,
-    title: `${i.candidate} - ${i.interviewer}`,
-    start: new Date(i.date),
-    end: new Date(i.date),
-    allDay: true,
-  }));
+  const events =filteredInterviews.map((i: any) => {
+    const baseDate = new Date(i.date);
+    const [startHour, startMinute] = i.timeSlotStart.split(":").map(Number);
+    const start = new Date(baseDate);
+    start.setHours(startHour, startMinute, 0, 0);
+    const [endHour, endMinute] = i.timeSlotEnd.split(":").map(Number);
+    const end = new Date(baseDate);
+    end.setHours(endHour, endMinute, 0, 0);
+
+    return {
+      ...i,
+      id: i.id,
+      title: `${i.candidate} - ${i.interviewer}`,
+      start,
+      end,
+      allDay: false,
+    };
+  });
+  
+
+  
 
   const convertToAmPm = (time: string): string => {
     const parsed = parse(time, "HH:mm", new Date());

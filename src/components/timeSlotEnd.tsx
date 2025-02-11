@@ -1,25 +1,41 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FiClock } from "react-icons/fi";
+import { parse, format, addMinutes } from "date-fns";
 
 interface TimeSlotProps {
   timeSlot: string;
+  timeSlotStart: string;
   setTimeSlot: (value: string) => void;
   date: Date | null;
 }
 
-const TimeSlotInputEnd: React.FC<TimeSlotProps> = ({ timeSlot, setTimeSlot, date }) => {
-  const getISTTime = (): string => {
-    const now = new Date();
-    const istOffset = 5.5 * 60 * 60 * 1000;
-    const istTime = new Date(now.getTime() + istOffset);
-    return istTime.toISOString().slice(11, 16);
+const TimeSlotInputEnd: React.FC<TimeSlotProps> = ({
+  timeSlot,
+  timeSlotStart,
+  setTimeSlot,
+  date,
+}) => {
+  // Helper to compute the next half-hour slot from a given time
+  const computeNextHalfHour = (start: string): string => {
+    try {
+      const parsed = parse(start, "HH:mm", new Date());
+      const nextTime = addMinutes(parsed, 30);
+      // If nextTime goes into the next day, you may choose to handle it differently.
+      return format(nextTime, "HH:mm");
+    } catch (error) {
+      return "";
+    }
   };
 
-  const currentTimeIST = getISTTime();
-
-  const validDate = date instanceof Date && !isNaN(date.getTime()) ? date : null;
-  
-  const isToday = validDate ? validDate.toDateString() === new Date().toDateString() : false;
+  // When timeSlotStart changes, update timeSlot automatically
+  useEffect(() => {
+    if (timeSlotStart) {
+      const nextSlot = computeNextHalfHour(timeSlotStart);
+      setTimeSlot(nextSlot);
+    } else {
+      setTimeSlot("");
+    }
+  }, [timeSlotStart, setTimeSlot]);
 
   return (
     <div className="flex flex-col">
@@ -30,13 +46,9 @@ const TimeSlotInputEnd: React.FC<TimeSlotProps> = ({ timeSlot, setTimeSlot, date
       <input
         type="time"
         value={timeSlot}
-        onChange={(e) => setTimeSlot(e.target.value)}
-        required
-        disabled={!validDate}
-        min={isToday ? currentTimeIST : undefined}
-        className={`w-full p-3 border rounded-md transition ease-in-out duration-200 
-          ${validDate ? "border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
-                 : "border-gray-200 bg-gray-100 cursor-not-allowed text-gray-400"}`}
+        readOnly
+        disabled
+        className="w-full p-3 border rounded-md bg-gray-100 text-gray-400"
       />
     </div>
   );

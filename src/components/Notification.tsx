@@ -10,7 +10,7 @@ interface NotificationModalProps {
 
 const NotificationModal: React.FC<NotificationModalProps> = ({ notifications, onClose }) => {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-r from-blue-100 via-indigo-50 to-blue-50 bg-opacity-50">
       <div className="bg-white rounded-lg shadow-lg p-6 w-11/12 md:w-1/2">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-xl font-bold">Upcoming Interviews</h3>
