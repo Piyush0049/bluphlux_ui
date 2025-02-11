@@ -55,7 +55,7 @@ This project was developed as part of an assignment with the following requireme
   - UUID
   - Date-fns
 
-- **Backend:** (Refer to the associated backend repository for details)
+- **Backend:** (Refer to the associated [backend repository](https://github.com/Piyush0049/bluphlux_api) for details)
 
 ## Setup Instructions
 
