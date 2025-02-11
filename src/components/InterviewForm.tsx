@@ -33,7 +33,6 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ existingInterview, isEdit
   );
   const [error, setError] = useState("");
 
-  // Helper function to add 10 minutes to a "HH:mm" string.
   const addTenMinutes = (time: string): string | null => {
     const [hoursStr, minutesStr] = time.split(":");
     const hours = parseInt(hoursStr, 10);
@@ -48,15 +47,12 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ existingInterview, isEdit
   };
 
   const convertToAmPm = (time: string): string => {
-    // Parse the time using a dummy date (today)
     const parsed = parse(time, "HH:mm", new Date());
     return format(parsed, "h:mm a");
   };
 
-  // When start time changes, update the start time and auto-set end time if needed.
   const handleTimeSlotStartChange = (value: string) => {
     setTimeSlotStart(value);
-    // If no end time or end time is earlier than or equal to start, auto-update end time.
     if (!timeSlotEnd || timeSlotEnd <= value) {
       const newEnd = addTenMinutes(value);
       if (newEnd) {
@@ -71,7 +67,6 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ existingInterview, isEdit
     setTimeSlotEnd(value);
   };
 
-  // Helper function: convert "HH:mm" to minutes from midnight.
   const timeToMinutes = (time: string): number => {
     const [hoursStr, minutesStr] = time.split(":");
     return parseInt(hoursStr, 10) * 60 + parseInt(minutesStr, 10);
@@ -79,8 +74,6 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ existingInterview, isEdit
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // If scheduling a new interview (not updating), check if recEmail exists.
     if (!isEdit) {
       const recEmail = localStorage.getItem("recEmail");
       if (!recEmail) {
@@ -88,8 +81,6 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ existingInterview, isEdit
         return;
       }
     }
-
-    // Validate times only if scheduling (or if you want to validate for both)
     if (!timeSlotStart || !timeSlotEnd) {
       setError("Both start and end times are required.");
       return;
@@ -104,8 +95,6 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ existingInterview, isEdit
       setError("Time slot must be at least 10 minutes.");
       return;
     }
-
-    // If scheduling (not updating), perform conflict check.
     if (!isEdit) {
       const isConflict = interviews.some(
         (i) =>
@@ -120,7 +109,6 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ existingInterview, isEdit
         return;
       }
     }
-
     const interviewData: Interview = {
       id: existingInterview ? existingInterview.id : uuidv4(),
       candidate,
@@ -130,31 +118,32 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ existingInterview, isEdit
       timeSlotEnd,
       interviewType: interviewType as Interview["interviewType"],
     };
-
     if (isEdit && existingInterview) {
       dispatch(updateInterview(interviewData));
     } else {
       dispatch(addInterview(interviewData));
     }
-
-    // If scheduling (not updating), send email.
-    const apiUrl = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL : "http://localhost:5000";
+    const apiUrl = "http://localhost:5000";
     if (!isEdit) {
-      const recEmail = localStorage.getItem("recEmail"); // We know it exists from earlier check.
+      const recEmail = localStorage.getItem("recEmail");
       try {
         const interviewDateStr = new Date(interviewData.date as Date)
           .toISOString()
           .split("T")[0];
-        // Convert start and end times to AM/PM format.
         const interviewTimeStartAmPm = convertToAmPm(timeSlotStart);
         const interviewTimeEndAmPm = convertToAmPm(timeSlotEnd);
         const interviewTimeStr = `${interviewTimeStartAmPm} - ${interviewTimeEndAmPm}`;
-        
+        console.log(candidate,
+          interviewDateStr,
+          interviewTimeStr,
+          recEmail,)
         await axios.post(`${apiUrl}/sendemail`, {
           recipientName: candidate,
           interviewDate: interviewDateStr,
           interviewTime: interviewTimeStr,
           recEmail,
+        },{
+          withCredentials: true,
         });
         toast.success("Email sent successfully!");
       } catch (error: any) {
@@ -172,7 +161,6 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ existingInterview, isEdit
       <Toaster position="top-center" />
       {error && <p className="text-red-500 text-sm">{error}</p>}
 
-      {/* Candidate Input */}
       <div className="flex flex-col">
         <label className="mb-1 text-gray-700 flex items-center">
           <FiUser className="mr-2" /> Candidate Name:
@@ -186,7 +174,6 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ existingInterview, isEdit
         />
       </div>
 
-      {/* Interviewer Input */}
       <div className="flex flex-col">
         <label className="mb-1 text-gray-700 flex items-center">
           <FiUser className="mr-2" /> Interviewer Name:
@@ -202,13 +189,10 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ existingInterview, isEdit
 
       <DateInput date={date} setDate={setDate} />
 
-      {/* Start Time Input */}
       <TimeSlotInputStart date={date} timeSlot={timeSlotStart} setTimeSlot={handleTimeSlotStartChange} />
 
-      {/* End Time Input */}
       <TimeSlotInputEnd date={date} timeSlot={timeSlotEnd} setTimeSlot={handleTimeSlotEndChange} />
 
-      {/* Interview Type Input */}
       <div className="flex flex-col">
         <label className="mb-1 text-gray-700 flex items-center">
           <FiLayers className="mr-2" /> Interview Type:
@@ -226,7 +210,6 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ existingInterview, isEdit
         </select>
       </div>
 
-      {/* Submit Button */}
       <button type="submit" className="w-full bg-blue-600 flex items-center justify-center text-white p-2 rounded-md hover:bg-blue-700 transition-colors">
         <div className="flex items-center">
           {isEdit ? <FiEdit3 className="mr-2" /> : <FiPlus className="mr-2" />}

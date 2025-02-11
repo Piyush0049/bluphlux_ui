@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { v4 as uuidv4 } from "uuid";
+import toast from "react-hot-toast";
 
 export interface Interview {
   id: string;
@@ -35,6 +36,7 @@ const interviewSlice = createSlice({
       if (index !== -1) {
         state.interviews[index] = action.payload;
       }
+      toast.success("Slot Updated!");
     },
     removeInterview: (state, action: PayloadAction<string>) => {
       state.interviews = state.interviews.filter((i) => i.id !== action.payload);

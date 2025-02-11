@@ -9,6 +9,7 @@ import { removeInterview, updateInterview } from "../store/interviewSlice";
 import { InterviewEvent } from "../components/InterviewCalendar";
 import { AiOutlineClose } from "react-icons/ai";
 import NotificationModal from "../components/Notification";
+import toast from "react-hot-toast";
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ const Dashboard: React.FC = () => {
   };
 
   const handleDelete = (id: string) => {
+    toast.success("Slot Deleted!")
     dispatch(removeInterview(id));
   };
 
@@ -49,7 +51,6 @@ const Dashboard: React.FC = () => {
   }));
 
   useEffect(() => {
-    // Helper function to compute the effective start time of an event.
     const getEffectiveStart = (event: InterviewEvent): Date | null => {
       if (!event.date || !event.timeSlotStart) return null;
       const d = new Date(event.date);
@@ -83,7 +84,6 @@ const Dashboard: React.FC = () => {
             Dashboard
           </h1>
           <div className="flex items-center gap-2 md:space-x-4">
-            {/* Notification Bell */}
             <button
               onClick={() => setShowModal(true)}
               className="relative flex items-center bg-gray-700 text-white px-3 py-3  cursor-pointer  rounded-full shadow-md hover:bg-gray-900 transition duration-300"
