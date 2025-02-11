@@ -1,50 +1,66 @@
-# React + TypeScript + Vite
+# Interview Scheduling Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Hi, I'm Piyush Joshi. This project is an Interview Scheduling application designed to streamline the process of scheduling, managing, and tracking interviews. The app offers a seamless user experience by providing a responsive interface and robust functionalities for scheduling interviews with candidates and interviewers.
 
-Currently, two official plugins are available:
+## Assignment Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project was developed as part of an assignment with the following requirements:
 
-## Expanding the ESLint configuration
+- **Interview Scheduling**
+  - Display a list of available time slots.
+  - Allow users to schedule an interview by selecting:
+    - Candidate name.
+    - Interviewer name.
+    - Date and time slot.
+    - Interview type (e.g., Technical, HR, Behavioral).
+  - Validate for conflicts (e.g., overlapping interviews for the same interviewer or candidate).
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Interview Dashboard**
+  - Display a calendar or timeline view of all scheduled interviews.
+  - Enable filtering by date, interviewer, or candidate.
 
-- Configure the top-level `parserOptions` property like this:
+- **Rescheduling/Editing Interviews**
+  - Allow updates to an interview’s details (e.g., time or interviewer).
+  - Persist changes seamlessly.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **Deleting Interviews**
+  - Enable deleting scheduled interviews with confirmation.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- **Notifications**
+  - Display success or error messages upon scheduling, updating, or deleting interviews.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Features
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- **Responsive Design:** The website is fully responsive for optimal viewing on various devices.
+- **Interactive Calendar:** Integrated calendar view using [react-big-calendar](https://github.com/jquense/react-big-calendar) for visualizing scheduled interviews.
+- **User-Friendly Interface:** Built with Vite, React, and TypeScript for a fast and modern experience.
+- **State Management:** Utilizes Redux Toolkit and redux-persist to manage and persist application state.
+- **Notifications:** Real-time feedback using react-hot-toast.
+- **API Integration:** Seamless integration with the backend, using environment variables to differentiate between production and local development.
+
+## Technologies Used
+
+- **Frontend:** 
+  - Vite
+  - React with TypeScript
+  - React Big Calendar
+  - React Icons
+  - React Datepicker
+  - React Router DOM
+  - Redux Toolkit & react-redux
+  - redux-persist
+  - Tailwind CSS (via @tailwindcss/vite)
+  - Styled Components
+  - Axios
+  - UUID
+  - Date-fns
+
+- **Backend:** (Refer to the associated backend repository for details)
+
+## Setup Instructions
+
+- **Frontend:**  
+  ```bash
+  - git clone https://github.com/Piyush0049/bluphlux_ui.git
+  - cd bluphlux_ui
+  - npm run dev
