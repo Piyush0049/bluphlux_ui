@@ -59,8 +59,41 @@ This project was developed as part of an assignment with the following requireme
 
 ## Setup Instructions
 
-- **Frontend:**  
-  ```bash
-  - git clone https://github.com/Piyush0049/bluphlux_ui.git
-  - cd bluphlux_ui
-  - npm run dev
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/Piyush0049/bluphlux_ui.git
+cd bluphlux_ui
+```
+
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+### 3. Setup Environment Variables
+Create a `.env` file in the root directory and add the required environment variables:
+```env
+VITE_API_URL=https://bluphlux-api.onrender.com
+```
+
+### 4. Run the Server
+
+#### For development:
+```bash
+npm run dev
+```
+
+#### For production:
+```bash
+npm run build
+npm start
+```
+
+## Scripts Overview
+
+- `npm run dev` - Runs the server in development mode with Nodemon.
+- `npm run build` - Compiles TypeScript files into JavaScript.
+- `npm start` - Runs the compiled JavaScript server in production mode.
+
+
