@@ -10,6 +10,7 @@ import { InterviewEvent } from "../components/InterviewCalendar";
 import { AiOutlineClose } from "react-icons/ai";
 import NotificationModal from "../components/Notification";
 import toast from "react-hot-toast";
+import { parse, format } from "date-fns";
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -49,6 +50,11 @@ const Dashboard: React.FC = () => {
     end: new Date(i.date),
     allDay: true,
   }));
+
+  const convertToAmPm = (time: string): string => {
+    const parsed = parse(time, "HH:mm", new Date());
+    return format(parsed, "h:mm a");
+  };
 
   useEffect(() => {
     const getEffectiveStart = (event: InterviewEvent): Date | null => {
@@ -192,8 +198,8 @@ const Dashboard: React.FC = () => {
                       <td className="px-6 py-4">{i.candidate}</td>
                       <td className="px-6 py-4">{i.interviewer}</td>
                       <td className="px-6 py-4">{formatDate(i.date)}</td>
-                      <td className="px-6 py-4">{i.timeSlotStart}</td>
-                      <td className="px-6 py-4">{i.timeSlotEnd}</td>
+                      <td className="px-6 py-4">{convertToAmPm(i.timeSlotStart)}</td>
+                      <td className="px-6 py-4">{convertToAmPm(i.timeSlotEnd)}</td>
                       <td className="px-6 py-4 flex space-x-3">
                         <button onClick={() => { navigate(`/edit/${i.id}`) }} className="text-blue-600 hover:text-blue-800 cursor-pointer">
                           <FiEdit size={20} />

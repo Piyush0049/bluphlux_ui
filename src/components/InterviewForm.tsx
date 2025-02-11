@@ -124,7 +124,7 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ existingInterview, isEdit
       dispatch(addInterview(interviewData));
     }
     const apiUrl = import.meta.env.VITE_ENV === "production"
-      ? import.meta.env.VITE_API_URL_PROD
+      ? import.meta.env.VITE_API_URL
       : "http://localhost:5000";
     if (!isEdit) {
       const recEmail = localStorage.getItem("recEmail");
