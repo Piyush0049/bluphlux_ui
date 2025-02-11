@@ -138,7 +138,7 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ existingInterview, isEdit
     }
 
     // If scheduling (not updating), send email.
-    const apiUrl = import.meta.env.VITE_API_URL;
+    const apiUrl = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL : "http://localhost:5000";
     if (!isEdit) {
       const recEmail = localStorage.getItem("recEmail"); // We know it exists from earlier check.
       try {
