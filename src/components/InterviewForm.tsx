@@ -123,7 +123,9 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ existingInterview, isEdit
     } else {
       dispatch(addInterview(interviewData));
     }
-    const apiUrl = "http://localhost:5000";
+    const apiUrl = import.meta.env.VITE_ENV === "production"
+      ? import.meta.env.VITE_API_URL_PROD
+      : "http://localhost:5000";
     if (!isEdit) {
       const recEmail = localStorage.getItem("recEmail");
       try {
@@ -142,7 +144,7 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ existingInterview, isEdit
           interviewDate: interviewDateStr,
           interviewTime: interviewTimeStr,
           recEmail,
-        },{
+        }, {
           withCredentials: true,
         });
         toast.success("Email sent successfully!");
