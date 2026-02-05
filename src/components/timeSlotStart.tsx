@@ -9,7 +9,6 @@ interface TimeSlotProps {
 }
 
 const TimeSlotInputStart: React.FC<TimeSlotProps> = ({ timeSlot, setTimeSlot, date }) => {
-  // Function to get current IST time in HH:mm format
   const getISTTime = (): string => {
     const now = new Date();
     const istOffset = 5.5 * 60 * 60 * 1000; // IST is UTC + 5:30
