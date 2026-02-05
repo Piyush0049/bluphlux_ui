@@ -24,8 +24,6 @@ const TimeSlotInputEnd: React.FC<TimeSlotProps> = ({
       return "";
     }
   };
-
-  // When timeSlotStart changes, update timeSlot automatically
   useEffect(() => {
     if (timeSlotStart) {
       const nextSlot = computeNextHalfHour(timeSlotStart);
