@@ -15,12 +15,10 @@ const TimeSlotInputEnd: React.FC<TimeSlotProps> = ({
   setTimeSlot,
   date,
 }) => {
-  // Helper to compute the next half-hour slot from a given time
   const computeNextHalfHour = (start: string): string => {
     try {
       const parsed = parse(start, "HH:mm", new Date());
       const nextTime = addMinutes(parsed, 30);
-      // If nextTime goes into the next day, you may choose to handle it differently.
       return format(nextTime, "HH:mm");
     } catch (error) {
       return "";
