@@ -18,7 +18,6 @@ const TimeSlotInputStart: React.FC<TimeSlotProps> = ({ timeSlot, setTimeSlot, da
 
   const currentTimeIST = getISTTime();
 
-  // Validate the provided date
   const validDate = date instanceof Date && !isNaN(date.getTime()) ? date : null;
 
   // Check if the selected date is today
@@ -56,8 +55,8 @@ const TimeSlotInputStart: React.FC<TimeSlotProps> = ({ timeSlot, setTimeSlot, da
         required
         disabled={!validDate}
         className={`w-full p-3 border rounded-md transition ease-in-out duration-200 
-          ${validDate ? "border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
-                      : "border-gray-200 bg-gray-100 cursor-not-allowed text-gray-400"}`}
+          ${validDate ? "border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            : "border-gray-200 bg-gray-100 cursor-not-allowed text-gray-400"}`}
       >
         <option value="">Select Time Slot</option>
         {generateTimeSlots().map((slot, index) => (
