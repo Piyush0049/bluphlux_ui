@@ -20,10 +20,8 @@ const TimeSlotInputStart: React.FC<TimeSlotProps> = ({ timeSlot, setTimeSlot, da
 
   const validDate = date instanceof Date && !isNaN(date.getTime()) ? date : null;
 
-  // Check if the selected date is today
   const isToday = validDate ? validDate.toDateString() === new Date().toDateString() : false;
 
-  // Convert a time string in 24-hour format to AM/PM format
   const convertToAmPm = (time: string): string => {
     const parsed = parse(time, "HH:mm", new Date());
     return format(parsed, "h:mm a");
